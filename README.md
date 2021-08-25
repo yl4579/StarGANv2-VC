@@ -8,9 +8,9 @@ Project Page: https://starganv2-vc.github.io/
 
 ## Training Code
 
-TODO
+WIP
 
 ## Pretrained Model
 
-TODO
+WIP
 
