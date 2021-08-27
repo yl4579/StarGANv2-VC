@@ -171,10 +171,15 @@ class Trainer(object):
             param_test.data = torch.lerp(param.data, param_test.data, beta)
 
     def _train_epoch(self):
+        self.epochs += 1
+        
         train_losses = defaultdict(list)
         _ = [self.model[k].train() for k in self.model]
         scaler = torch.cuda.amp.GradScaler() if (('cuda' in str(self.device)) and self.fp16_run) else None
 
+        use_con_reg = (self.epochs >= self.args.con_reg_epoch)
+        use_adv_cls = (self.epochs >= self.args.adv_cls_epoch)
+        
         for train_steps_per_epoch, batch in enumerate(tqdm(self.train_dataloader, desc="[train]"), 1):
 
             ### load data
@@ -185,10 +190,10 @@ class Trainer(object):
             self.optimizer.zero_grad()
             if scaler is not None:
                 with torch.cuda.amp.autocast():
-                    d_loss, d_losses_latent = compute_d_loss(self.model, self.args.d_loss, x_real, y_org, y_trg, z_trg=z_trg)
+                    d_loss, d_losses_latent = compute_d_loss(self.model, self.args.d_loss, x_real, y_org, y_trg, z_trg=z_trg, use_adv_cls=use_adv_cls, use_con_reg=use_con_reg)
                 scaler.scale(d_loss).backward()
             else:
-                d_loss, d_losses_latent = compute_d_loss(self.model, self.args.d_loss, x_real, y_org, y_trg, z_trg=z_trg)
+                d_loss, d_losses_latent = compute_d_loss(self.model, self.args.d_loss, x_real, y_org, y_trg, z_trg=z_trg, use_adv_cls=use_adv_cls, use_con_reg=use_con_reg)
                 d_loss.backward()
             self.optimizer.step('discriminator', scaler=scaler)
 
@@ -196,10 +201,10 @@ class Trainer(object):
             self.optimizer.zero_grad()
             if scaler is not None:
                 with torch.cuda.amp.autocast():
-                    d_loss, d_losses_ref = compute_d_loss(self.model, self.args.d_loss, x_real, y_org, y_trg, x_ref=x_ref)
+                    d_loss, d_losses_ref = compute_d_loss(self.model, self.args.d_loss, x_real, y_org, y_trg, x_ref=x_ref, use_adv_cls=use_adv_cls, use_con_reg=use_con_reg)
                 scaler.scale(d_loss).backward()
             else:
-                d_loss, d_losses_ref = compute_d_loss(self.model, self.args.d_loss, x_real, y_org, y_trg, x_ref=x_ref)
+                d_loss, d_losses_ref = compute_d_loss(self.model, self.args.d_loss, x_real, y_org, y_trg, x_ref=x_ref, use_adv_cls=use_adv_cls, use_con_reg=use_con_reg)
                 d_loss.backward()
 
             self.optimizer.step('discriminator', scaler=scaler)
@@ -209,11 +214,11 @@ class Trainer(object):
             if scaler is not None:
                 with torch.cuda.amp.autocast():
                     g_loss, g_losses_latent = compute_g_loss(
-                        self.model, self.args.g_loss, x_real, y_org, y_trg, z_trgs=[z_trg, z_trg2])
+                        self.model, self.args.g_loss, x_real, y_org, y_trg, z_trgs=[z_trg, z_trg2], use_adv_cls=use_adv_cls)
                 scaler.scale(g_loss).backward()
             else:
                 g_loss, g_losses_latent = compute_g_loss(
-                    self.model, self.args.g_loss, x_real, y_org, y_trg, z_trgs=[z_trg, z_trg2])
+                    self.model, self.args.g_loss, x_real, y_org, y_trg, z_trgs=[z_trg, z_trg2], use_adv_cls=use_adv_cls)
                 g_loss.backward()
 
             self.optimizer.step('generator', scaler=scaler)
@@ -225,11 +230,11 @@ class Trainer(object):
             if scaler is not None:
                 with torch.cuda.amp.autocast():
                     g_loss, g_losses_ref = compute_g_loss(
-                        self.model, self.args.g_loss, x_real, y_org, y_trg, x_refs=[x_ref, x_ref2])
+                        self.model, self.args.g_loss, x_real, y_org, y_trg, x_refs=[x_ref, x_ref2], use_adv_cls=use_adv_cls)
                 scaler.scale(g_loss).backward()
             else:
                 g_loss, g_losses_ref = compute_g_loss(
-                    self.model, self.args.g_loss, x_real, y_org, y_trg, x_refs=[x_ref, x_ref2])
+                    self.model, self.args.g_loss, x_real, y_org, y_trg, x_refs=[x_ref, x_ref2], use_adv_cls=use_adv_cls)
                 g_loss.backward()
             self.optimizer.step('generator', scaler=scaler)
 
@@ -250,6 +255,8 @@ class Trainer(object):
 
     @torch.no_grad()
     def _eval_epoch(self):
+        use_adv_cls = (self.epochs >= self.args.adv_cls_epoch)
+        
         eval_losses = defaultdict(list)
         eval_images = defaultdict(list)
         _ = [self.model[k].eval() for k in self.model]
@@ -261,15 +268,15 @@ class Trainer(object):
 
             # train the discriminator
             d_loss, d_losses_latent = compute_d_loss(
-                self.model, self.args.d_loss, x_real, y_org, y_trg, z_trg=z_trg, use_r1_reg=False)
+                self.model, self.args.d_loss, x_real, y_org, y_trg, z_trg=z_trg, use_r1_reg=False, use_adv_cls=use_adv_cls)
             d_loss, d_losses_ref = compute_d_loss(
-                self.model, self.args.d_loss, x_real, y_org, y_trg, x_ref=x_ref, use_r1_reg=False)
+                self.model, self.args.d_loss, x_real, y_org, y_trg, x_ref=x_ref, use_r1_reg=False, use_adv_cls=use_adv_cls)
 
             # train the generator
             g_loss, g_losses_latent = compute_g_loss(
-                self.model, self.args.g_loss, x_real, y_org, y_trg, z_trgs=[z_trg, z_trg2])
+                self.model, self.args.g_loss, x_real, y_org, y_trg, z_trgs=[z_trg, z_trg2], use_adv_cls=use_adv_cls)
             g_loss, g_losses_ref = compute_g_loss(
-                self.model, self.args.g_loss, x_real, y_org, y_trg, x_refs=[x_ref, x_ref2])
+                self.model, self.args.g_loss, x_real, y_org, y_trg, x_refs=[x_ref, x_ref2], use_adv_cls=use_adv_cls)
 
             for key in d_losses_latent:
                 eval_losses["eval/%s" % key].append(d_losses_latent[key])
@@ -282,7 +289,7 @@ class Trainer(object):
                 F0 = self.model.f0_model.get_feature_GAN(x_real)
                 x_fake = self.model_ema.generator(x_real, s_trg, masks=None, F0=F0)
                 # generate x_recon
-                s_real = self.model_ema.style_encoder(x_real, y_trg)
+                s_real = self.model_ema.style_encoder(x_real, y_org)
                 F0_fake = self.model.f0_model.get_feature_GAN(x_fake)
                 x_recon = self.model_ema.generator(x_fake, s_real, masks=None, F0=F0_fake)
                 
