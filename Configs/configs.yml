@@ -1,4 +1,4 @@
-log_dir: "Models/VCTK20_plain_stargan"
+log_dir: "Models/VCTK20"
 save_freq: 2
 device: "cuda"
 epochs: 150
