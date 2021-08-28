@@ -144,27 +144,6 @@ class Trainer(object):
             break
         return lr
 
-
-    @staticmethod
-    def get_image(arrs):
-        pil_images = []
-        height = 0
-        width = 0
-        for arr in arrs:
-            uint_arr = (((arr - arr.min()) / (arr.max() - arr.min())) * 255).astype(np.uint8)
-            pil_image = Image.fromarray(uint_arr)
-            pil_images.append(pil_image)
-            height += uint_arr.shape[0]
-            width = max(width, uint_arr.shape[1])
-
-        palette = Image.new('L', (width, height))
-        curr_heigth = 0
-        for pil_image in pil_images:
-            palette.paste(pil_image, (0, curr_heigth))
-            curr_heigth += pil_image.size[1]
-
-        return palette
-
     @staticmethod
     def moving_average(model, model_test, beta=0.999):
         for param, param_test in zip(model.parameters(), model_test.parameters()):
@@ -294,9 +273,9 @@ class Trainer(object):
                 x_recon = self.model_ema.generator(x_fake, s_real, masks=None, F0=F0_fake)
                 
                 eval_images['eval/image'].append(
-                    self.get_image([x_real[0, 0].cpu().numpy(),
-                                    x_fake[0, 0].cpu().numpy(),
-                                    x_recon[0, 0].cpu().numpy()]))
+                    ([x_real[0, 0].cpu().numpy(),
+                    x_fake[0, 0].cpu().numpy(),
+                    x_recon[0, 0].cpu().numpy()]))
 
         eval_losses = {key: np.mean(value) for key, value in eval_losses.items()}
         eval_losses.update(eval_images)
