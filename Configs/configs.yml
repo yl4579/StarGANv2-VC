@@ -4,12 +4,15 @@ device: "cuda"
 epochs: 150
 batch_size: 5
 pretrained_model: ""
+load_only_params: false
+fp16_run: true
+
 train_data: "Data/train_list.txt"
 val_data: "Data/val_list.txt"
+
 F0_path: "Utils/JDC/bst.t7"
 ASR_config: "Utils/ASR/config.yml"
 ASR_path: "Utils/ASR/epoch_00100.pth"
-fp16_run: true
 
 preprocess_params:
   sr: 24000
