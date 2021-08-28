@@ -53,6 +53,3 @@ loss_params:
 
 optimizer_params:
   lr: 0.0001
-  
-  
-
