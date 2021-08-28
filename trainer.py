@@ -262,20 +262,20 @@ class Trainer(object):
             for key in g_losses_latent:
                 eval_losses["eval/%s" % key].append(g_losses_latent[key])
 
-            if eval_steps_per_epoch % 10 == 0:
-                # generate x_fake
-                s_trg = self.model_ema.style_encoder(x_ref, y_trg)
-                F0 = self.model.f0_model.get_feature_GAN(x_real)
-                x_fake = self.model_ema.generator(x_real, s_trg, masks=None, F0=F0)
-                # generate x_recon
-                s_real = self.model_ema.style_encoder(x_real, y_org)
-                F0_fake = self.model.f0_model.get_feature_GAN(x_fake)
-                x_recon = self.model_ema.generator(x_fake, s_real, masks=None, F0=F0_fake)
+#             if eval_steps_per_epoch % 10 == 0:
+#                 # generate x_fake
+#                 s_trg = self.model_ema.style_encoder(x_ref, y_trg)
+#                 F0 = self.model.f0_model.get_feature_GAN(x_real)
+#                 x_fake = self.model_ema.generator(x_real, s_trg, masks=None, F0=F0)
+#                 # generate x_recon
+#                 s_real = self.model_ema.style_encoder(x_real, y_org)
+#                 F0_fake = self.model.f0_model.get_feature_GAN(x_fake)
+#                 x_recon = self.model_ema.generator(x_fake, s_real, masks=None, F0=F0_fake)
                 
-                eval_images['eval/image'].append(
-                    ([x_real[0, 0].cpu().numpy(),
-                    x_fake[0, 0].cpu().numpy(),
-                    x_recon[0, 0].cpu().numpy()]))
+#                 eval_images['eval/image'].append(
+#                     ([x_real[0, 0].cpu().numpy(),
+#                     x_fake[0, 0].cpu().numpy(),
+#                     x_recon[0, 0].cpu().numpy()]))
 
         eval_losses = {key: np.mean(value) for key, value in eval_losses.items()}
         eval_losses.update(eval_images)
