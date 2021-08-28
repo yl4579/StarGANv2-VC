@@ -50,4 +50,4 @@ You can edit the [meldataset.py](https://github.com/yl4579/StarGANv2-VC/blob/mai
 - [Diamondfan/CTC_pytorch](https://github.com/Diamondfan/CTC_pytorch)
 
 ## Acknowledgement
-The author would like to thank [https://github.com/tosaka-m](@tosaka-m) for his great repository and valuable discussions.
+The author would like to thank [@tosaka-m](https://github.com/tosaka-m) for his great repository and valuable discussions.
