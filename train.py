@@ -139,7 +139,6 @@ def main(config_path):
 
     return 0
 
-
 def get_data_path_list(train_path=None, val_path=None):
     if train_path is None:
         train_path = "Data/train_list.txt"
