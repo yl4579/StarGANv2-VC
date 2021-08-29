@@ -20,7 +20,7 @@ cd StarGANv2-VC
 pip install SoundFile torchaudio munch parallel_wavegan torch pydub
 ```
 4. Download and extract the [VCTK dataset](https://datashare.ed.ac.uk/handle/10283/3443) 
-and use [VCTK.ipynb](https://github.com/yl4579/StarGANv2-VC/blob/main/Data/VCTK.ipynb) to prepare the data (downsample to 24 kHz etc.). You can also [download the dataset](https://drive.google.com/file/d/1t7QQbu4YC_P1mv9puA_KgSomSFDsSzD6/view?usp=sharing) we have prepared and unzip it to the `Data` folder.  
+and use [VCTK.ipynb](https://github.com/yl4579/StarGANv2-VC/blob/main/Data/VCTK.ipynb) to prepare the data (downsample to 24 kHz etc.). You can also [download the dataset](https://drive.google.com/file/d/1t7QQbu4YC_P1mv9puA_KgSomSFDsSzD6/view?usp=sharing) we have prepared and unzip it to the `Data` folder, use the provided `config.yml` to reproduce our models. 
 
 ## Training
 ```bash
@@ -32,7 +32,9 @@ Checkpoints and Tensorboard logs will be saved at `log_dir`. To speed up trainin
 
 ## Inference
 
-Please refer to [inference.ipynb](https://github.com/yl4579/StarGANv2-VC/blob/main/Demo/inference.ipynb) for details. The pretrained StarGANv2 and ParallelWaveGAN can be downloaded at *WIP*.
+Please refer to [inference.ipynb](https://github.com/yl4579/StarGANv2-VC/blob/main/Demo/inference.ipynb) for details. 
+
+The pretrained StarGANv2 and ParallelWaveGAN on VCTK corpus can be downloaded at [StarGANv2 Link](https://drive.google.com/file/d/1nzTyyl-9A1Hmqya2Q_f2bpZkUoRjbZsY/view?usp=sharing) and [ParallelWaveGAN Link](https://drive.google.com/file/d/1q8oSAzwkqi99oOGXDZyLypCiz0Qzn3Ab/view?usp=sharing). Please unzip to `Models` and `Vocoder` respectivey and run each cell in the notebook.
 
 ## ASR & F0 Models
 
