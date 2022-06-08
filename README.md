@@ -8,6 +8,8 @@ Paper: https://arxiv.org/abs/2107.10394
 
 Audio samples: https://starganv2-vc.github.io/
 
+***Our work has been awared [INTERSPEECH 2021 Best Paper Award](https://www.interspeech2021.org/best-student-paper-awards)**
+
 ## Pre-requisites
 1. Python >= 3.7
 2. Clone this repository:
