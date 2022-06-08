@@ -49,7 +49,6 @@ You can edit the [meldataset.py](https://github.com/yl4579/StarGANv2-VC/blob/mai
 - [kan-bayashi/ParallelWaveGAN](https://github.com/kan-bayashi/ParallelWaveGAN)
 - [tosaka-m/japanese_realtime_tts](https://github.com/tosaka-m/japanese_realtime_tts)
 - [keums/melodyExtraction_JDC](https://github.com/keums/melodyExtraction_JDC)
-- [Diamondfan/CTC_pytorch](https://github.com/Diamondfan/CTC_pytorch)
 
 ## Acknowledgement
 The author would like to thank [@tosaka-m](https://github.com/tosaka-m) for his great repository and valuable discussions.
