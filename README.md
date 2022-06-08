@@ -42,7 +42,9 @@ The pretrained F0 and ASR models are provided under the `Utils` folder. Both the
 
 The ASR model is trained on English corpus, but it appears to work when training StarGANv2 models in other languages such as Japanese. The F0 model also appears to work with singing data. For the best performance, however, training your own ASR and F0 models is encouraged for non-English and non-speech data. 
 
-You can edit the [meldataset.py](https://github.com/yl4579/StarGANv2-VC/blob/main/meldataset.py) with your own melspectrogram preprocessing, but the provided pretrained models will no longer work. You will need to train your own ASR and F0 models with the new preprocessing. You may refer to repo [Diamondfan/CTC_pytorch](https://github.com/Diamondfan/CTC_pytorch) and [keums/melodyExtraction_JDC](https://github.com/keums/melodyExtraction_JDC) to train your own the ASR and F0 models, for example. 
+You can edit the [meldataset.py](https://github.com/yl4579/StarGANv2-VC/blob/main/meldataset.py) with your own melspectrogram preprocessing, but the provided pretrained models will no longer work. You will need to train your own ASR and F0 models with the new preprocessing. 
+
+The code for training new ASR models is available [here](https://github.com/yl4579/AuxiliaryASR).
 
 ## References
 - [clovaai/stargan-v2](https://github.com/clovaai/stargan-v2)
