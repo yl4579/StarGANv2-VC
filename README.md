@@ -19,7 +19,7 @@ cd StarGANv2-VC
 ```
 3. Install python requirements: 
 ```bash
-pip install SoundFile torchaudio munch parallel_wavegan torch pydub pyyaml click 
+pip install SoundFile torchaudio munch parallel_wavegan torch pydub pyyaml click librosa
 ```
 4. Download and extract the [VCTK dataset](https://datashare.ed.ac.uk/handle/10283/3443) 
 and use [VCTK.ipynb](https://github.com/yl4579/StarGANv2-VC/blob/main/Data/VCTK.ipynb) to prepare the data (downsample to 24 kHz etc.). You can also [download the dataset](https://drive.google.com/file/d/1t7QQbu4YC_P1mv9puA_KgSomSFDsSzD6/view?usp=sharing) we have prepared and unzip it to the `Data` folder, use the provided `config.yml` to reproduce our models. 
