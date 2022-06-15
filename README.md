@@ -14,7 +14,7 @@ Audio samples: https://starganv2-vc.github.io/
 1. Python >= 3.7
 2. Clone this repository:
 ```bash
-git https://github.com/yl4579/StarGANv2-VC.git
+git clone https://github.com/yl4579/StarGANv2-VC.git
 cd StarGANv2-VC
 ```
 3. Install python requirements: 
