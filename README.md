@@ -46,7 +46,7 @@ The ASR model is trained on English corpus, but it appears to work when training
 
 You can edit the [meldataset.py](https://github.com/yl4579/StarGANv2-VC/blob/main/meldataset.py) with your own melspectrogram preprocessing, but the provided pretrained models will no longer work. You will need to train your own ASR and F0 models with the new preprocessing. 
 
-The code for training new ASR models is available [here](https://github.com/yl4579/AuxiliaryASR).
+The code for training new ASR models is available [here](https://github.com/yl4579/AuxiliaryASR) and that for training new F0 models is available [here](https://github.com/yl4579/PitchExtractor).
 
 ## References
 - [clovaai/stargan-v2](https://github.com/clovaai/stargan-v2)
