@@ -148,7 +148,7 @@ def build_dataloader(path_list,
                              batch_size=batch_size,
                              shuffle=(not validation),
                              num_workers=num_workers,
-                             drop_last=(not validation),
+                             drop_last=True,
                              collate_fn=collate_fn,
                              pin_memory=(device != 'cpu'))
 
