@@ -40,8 +40,6 @@ Please refer to [inference.ipynb](https://github.com/yl4579/StarGANv2-VC/blob/ma
 
 The pretrained StarGANv2 and ParallelWaveGAN on VCTK corpus can be downloaded at [StarGANv2 Link](https://drive.google.com/file/d/1nzTyyl-9A1Hmqya2Q_f2bpZkUoRjbZsY/view?usp=sharing) and [ParallelWaveGAN Link](https://drive.google.com/file/d/1q8oSAzwkqi99oOGXDZyLypCiz0Qzn3Ab/view?usp=sharing). Please unzip to `Models` and `Vocoder` respectivey and run each cell in the notebook.
 
-For Hifi-GAN support, please check [this issue](https://github.com/yl4579/StarGANv2-VC/issues/59).
-
 ## ASR & F0 Models
 
 The pretrained F0 and ASR models are provided under the `Utils` folder. Both the F0 and ASR models are trained with melspectrograms preprocessed using [meldataset.py](https://github.com/yl4579/StarGANv2-VC/blob/main/meldataset.py), and both models are trained on speech data only. 
