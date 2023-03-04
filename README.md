@@ -19,10 +19,10 @@ cd StarGANv2-VC
 ```
 3. Install python requirements: 
 ```bash
-pip install SoundFile torchaudio munch parallel_wavegan torch pydub pyyaml click librosa
+pip install SoundFile torchaudio munch torch pydub pyyaml click librosa 
 ```
 4. Download and extract the [VCTK dataset](https://datashare.ed.ac.uk/handle/10283/3443) 
-and use [VCTK.ipynb](https://github.com/yl4579/StarGANv2-VC/blob/main/Data/VCTK.ipynb) to prepare the data (downsample to 24 kHz etc.). You can also [download the dataset](https://drive.google.com/file/d/1t7QQbu4YC_P1mv9puA_KgSomSFDsSzD6/view?usp=sharing) we have prepared and unzip it to the `Data` folder, use the provided `config.yml` to reproduce our models. 
+and use [VCTK.ipynb](https://github.com/yl4579/StarGANv2-VC/blob/main/Data/VCTK.ipynb) to prepare the data (downsample to 22.05 kHz etc.). You can also [download the dataset](https://drive.google.com/file/d/1t7QQbu4YC_P1mv9puA_KgSomSFDsSzD6/view?usp=sharing) we have prepared and unzip it to the `Data` folder, use the provided `config.yml` to reproduce our models. 
 
 ## Training
 ```bash
@@ -36,9 +36,7 @@ Checkpoints and Tensorboard logs will be saved at `log_dir`. To speed up trainin
 
 Please refer to [inference.ipynb](https://github.com/yl4579/StarGANv2-VC/blob/main/Demo/inference.ipynb) for details. 
 
-The pretrained StarGANv2 and ParallelWaveGAN on VCTK corpus can be downloaded at [StarGANv2 Link](https://drive.google.com/file/d/1nzTyyl-9A1Hmqya2Q_f2bpZkUoRjbZsY/view?usp=sharing) and [ParallelWaveGAN Link](https://drive.google.com/file/d/1q8oSAzwkqi99oOGXDZyLypCiz0Qzn3Ab/view?usp=sharing). Please unzip to `Models` and `Vocoder` respectivey and run each cell in the notebook.
-
-For Hifi-GAN support, please check [this issue](https://github.com/yl4579/StarGANv2-VC/issues/59).
+The pretrained StarGANv2 on VCTK corpus can be downloaded at [StarGANv2 Link](https://drive.google.com/file/d/1nzTyyl-9A1Hmqya2Q_f2bpZkUoRjbZsY/view?usp=sharing). The BIGVGAN model can be downloaded at [BIGVGAN repo](https://github.com/NVIDIA/BigVGAN). This recipe also works with the [Hifi-GAN repo] (https://github.com/jik876/hifi-gan). 
 
 ## ASR & F0 Models
 
@@ -52,7 +50,7 @@ The code for training new ASR models is available [here](https://github.com/yl45
 
 ## References
 - [clovaai/stargan-v2](https://github.com/clovaai/stargan-v2)
-- [kan-bayashi/ParallelWaveGAN](https://github.com/kan-bayashi/ParallelWaveGAN)
+- [NVIDIA/BigVGAN](https://github.com/NVIDIA/BigVGAN)
 - [tosaka-m/japanese_realtime_tts](https://github.com/tosaka-m/japanese_realtime_tts)
 - [keums/melodyExtraction_JDC](https://github.com/keums/melodyExtraction_JDC)
 
