@@ -36,7 +36,7 @@ Checkpoints and Tensorboard logs will be saved at `log_dir`. To speed up trainin
 
 Please refer to [inference.ipynb](https://github.com/yl4579/StarGANv2-VC/blob/BIGVGAN/Demo/inference.ipynb) for details. 
 
-The pretrained StarGANv2 on VCTK corpus can be downloaded at [StarGANv2 Link](https://drive.google.com/file/d/1ODtQQ4o7wdmu1yIrwu2Efdf-dWsFi6w6/view?usp=sharing). The BIGVGAN model can be downloaded at [BIGVGAN repo](https://github.com/NVIDIA/BigVGAN). This recipe also works with the [Hifi-GAN repo](https://github.com/jik876/hifi-gan). 
+The pretrained StarGANv2 on VCTK corpus can be downloaded at [StarGANv2 Link](https://drive.google.com/file/d/1TO83dvhWol-6VPZ49bT8GMKtbqUbq5zr/view?usp=sharing). The BIGVGAN model can be downloaded at [BIGVGAN repo](https://github.com/NVIDIA/BigVGAN). This recipe also works with the [Hifi-GAN repo](https://github.com/jik876/hifi-gan). 
 
 ## ASR & F0 Models
 
