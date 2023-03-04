@@ -175,7 +175,7 @@ def compute_g_loss(nets, args, x_real, y_org, y_trg, z_trgs=None, x_refs=None, u
                        adv_cls=loss_adv_cls.item())
     
 # for norm consistency loss
-def log_norm(x, dim=-1):
+def log_norm(x, dim=-2):
     """
     normalized log mel -> mel -> norm -> log(norm)
     """    
