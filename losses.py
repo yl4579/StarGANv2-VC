@@ -10,6 +10,8 @@ from transforms import build_transforms
 import torch.nn.functional as F
 import numpy as np
 
+from meldataset import spectral_de_normalize_torch
+
 def compute_d_loss(nets, args, x_real, y_org, y_trg, z_trg=None, x_ref=None, use_r1_reg=True, use_adv_cls=False, use_con_reg=False):
     args = Munch(args)
 
@@ -148,6 +150,12 @@ def compute_g_loss(nets, args, x_real, y_org, y_trg, z_trgs=None, x_refs=None, u
         loss_adv_cls = F.cross_entropy(out_de[y_org != y_trg], y_trg[y_org != y_trg])
     else:
         loss_adv_cls = torch.zeros(1).mean()
+        
+    # F0 consistency loss (for vocoder finetuning)
+    if args.lambda_f0 > 0:
+        x_org = nets.generator(x_real, s_org, masks=None, F0=GAN_F0_real)
+        _, _, cyc_F0_org = nets.f0_model(x_org)
+        loss_cyc += F.smooth_l1_loss(cyc_F0_org, cyc_F0_real)
     
     loss = args.lambda_adv * loss_adv + args.lambda_sty * loss_sty \
            - args.lambda_ds * loss_ds + args.lambda_cyc * loss_cyc\
@@ -167,11 +175,11 @@ def compute_g_loss(nets, args, x_real, y_org, y_trg, z_trgs=None, x_refs=None, u
                        adv_cls=loss_adv_cls.item())
     
 # for norm consistency loss
-def log_norm(x, mean=-4, std=4, dim=2):
+def log_norm(x, dim=-1):
     """
     normalized log mel -> mel -> norm -> log(norm)
-    """
-    x = torch.log(torch.exp(x * std + mean).norm(dim=dim))
+    """    
+    x = torch.log(spectral_de_normalize_torch(x).norm(dim=dim))
     return x
 
 # for adversarial loss

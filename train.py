@@ -66,12 +66,14 @@ def main(config_path):
     train_dataloader = build_dataloader(train_list,
                                         batch_size=batch_size,
                                         num_workers=4,
-                                        device=device)
+                                        device=device,
+                                      dataset_config=config.get('dataset_params', {}))
     val_dataloader = build_dataloader(val_list,
                                       batch_size=batch_size,
                                       validation=True,
                                       num_workers=2,
-                                      device=device)
+                                      device=device,
+                                      dataset_config=config.get('dataset_params', {}))
 
     # load pretrained ASR model
     ASR_config = config.get('ASR_config', False)
@@ -87,7 +89,7 @@ def main(config_path):
     # load pretrained F0 model
     F0_path = config.get('F0_path', False)
     F0_model = JDCNet(num_class=1, seq_len=192)
-    params = torch.load(F0_path, map_location='cpu')['net']
+    params = torch.load(F0_path, map_location='cpu')['model']
     F0_model.load_state_dict(params)
     
     # build model
