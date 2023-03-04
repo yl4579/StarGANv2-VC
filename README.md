@@ -14,7 +14,7 @@ Audio samples: https://starganv2-vc.github.io/
 1. Python >= 3.7
 2. Clone this repository:
 ```bash
-git clone https://github.com/yl4579/StarGANv2-VC.git
+git clone -b BIGVGAN https://github.com/yl4579/StarGANv2-VC.git
 cd StarGANv2-VC
 ```
 3. Install python requirements: 
@@ -22,29 +22,29 @@ cd StarGANv2-VC
 pip install SoundFile torchaudio munch torch pydub pyyaml click librosa 
 ```
 4. Download and extract the [VCTK dataset](https://datashare.ed.ac.uk/handle/10283/3443) 
-and use [VCTK.ipynb](https://github.com/yl4579/StarGANv2-VC/blob/main/Data/VCTK.ipynb) to prepare the data (downsample to 22.05 kHz etc.). You can also [download the dataset](https://drive.google.com/file/d/1t7QQbu4YC_P1mv9puA_KgSomSFDsSzD6/view?usp=sharing) we have prepared and unzip it to the `Data` folder, use the provided `config.yml` to reproduce our models. 
+and use [VCTK.ipynb](https://github.com/yl4579/StarGANv2-VC/blob/BIGVGAN/Data/VCTK.ipynb) to prepare the data (downsample to 22.05 kHz etc.). 
 
 ## Training
 ```bash
 python train.py --config_path ./Configs/config.yml
 ```
-Please specify the training and validation data in `config.yml` file. Change `num_domains` to the number of speakers in the dataset. The data list format needs to be `filename.wav|speaker_number`, see [train_list.txt](https://github.com/yl4579/StarGANv2-VC/blob/main/Data/train_list.txt) as an example. 
+Please specify the training and validation data in `config.yml` file. Change `num_domains` to the number of speakers in the dataset. The data list format needs to be `filename.wav|speaker_number`, see [train_list.txt](https://github.com/yl4579/StarGANv2-VC/blob/BIGVGAN/Data/train_list.txt) as an example. 
 
 Checkpoints and Tensorboard logs will be saved at `log_dir`. To speed up training, you may want to make `batch_size` as large as your GPU RAM can take. However, please note that `batch_size = 5` will take around 10G GPU RAM. 
 
 ## Inference
 
-Please refer to [inference.ipynb](https://github.com/yl4579/StarGANv2-VC/blob/main/Demo/inference.ipynb) for details. 
+Please refer to [inference.ipynb](https://github.com/yl4579/StarGANv2-VC/blob/BIGVGAN/Demo/inference.ipynb) for details. 
 
-The pretrained StarGANv2 on VCTK corpus can be downloaded at [StarGANv2 Link](https://drive.google.com/file/d/1nzTyyl-9A1Hmqya2Q_f2bpZkUoRjbZsY/view?usp=sharing). The BIGVGAN model can be downloaded at [BIGVGAN repo](https://github.com/NVIDIA/BigVGAN). This recipe also works with the [Hifi-GAN repo] (https://github.com/jik876/hifi-gan). 
+The pretrained StarGANv2 on VCTK corpus can be downloaded at [StarGANv2 Link](https://drive.google.com/file/d/1ODtQQ4o7wdmu1yIrwu2Efdf-dWsFi6w6/view?usp=sharing). The BIGVGAN model can be downloaded at [BIGVGAN repo](https://github.com/NVIDIA/BigVGAN). This recipe also works with the [Hifi-GAN repo](https://github.com/jik876/hifi-gan). 
 
 ## ASR & F0 Models
 
-The pretrained F0 and ASR models are provided under the `Utils` folder. Both the F0 and ASR models are trained with melspectrograms preprocessed using [meldataset.py](https://github.com/yl4579/StarGANv2-VC/blob/main/meldataset.py), and both models are trained on speech data only. 
+The pretrained F0 and ASR models are provided under the `Utils` folder. Both the F0 and ASR models are trained with melspectrograms preprocessed using [meldataset.py](https://github.com/yl4579/StarGANv2-VC/blob/BIGVGAN/meldataset.py), and both models are trained on speech data only. 
 
 The ASR model is trained on English corpus, but it appears to work when training StarGANv2 models in other languages such as Japanese. The F0 model also appears to work with singing data. For the best performance, however, training your own ASR and F0 models is encouraged for non-English and non-speech data. 
 
-You can edit the [meldataset.py](https://github.com/yl4579/StarGANv2-VC/blob/main/meldataset.py) with your own melspectrogram preprocessing, but the provided pretrained models will no longer work. You will need to train your own ASR and F0 models with the new preprocessing. 
+You can edit the [meldataset.py](https://github.com/yl4579/StarGANv2-VC/blob/BIGVGAN/meldataset.py) with your own melspectrogram preprocessing, but the provided pretrained models will no longer work. You will need to train your own ASR and F0 models with the new preprocessing. 
 
 The code for training new ASR models is available [here](https://github.com/yl4579/AuxiliaryASR) and that for training new F0 models is available [here](https://github.com/yl4579/PitchExtractor).
 
