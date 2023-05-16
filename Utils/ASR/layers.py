@@ -87,7 +87,7 @@ class CausualBlock(nn.Module):
         for block in self.blocks:
             res = x
             x = block(x)
-            x += res
+            x = x + res
         return x
 
     def _get_conv(self, hidden_dim, dilation, activ='lrelu', dropout_p=0.0):
@@ -115,7 +115,7 @@ class ConvBlock(nn.Module):
         for block in self.blocks:
             res = x
             x = block(x)
-            x += res
+            x = x + res
         return x
 
     def _get_conv(self, hidden_dim, dilation, activ='relu', dropout_p=0.0):
