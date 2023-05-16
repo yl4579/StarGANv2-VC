@@ -77,7 +77,7 @@ class CausualConv(nn.Module):
         return x
 
 class CausualBlock(nn.Module):
-    def __init__(self, hidden_dim, n_conv=3, dropout_p=0.2, activ='lrelu'):
+    def __init__(self, hidden_dim, n_conv=3, dropout_p=0.0, activ='lrelu'):
         super(CausualBlock, self).__init__()
         self.blocks = nn.ModuleList([
             self._get_conv(hidden_dim, dilation=3**i, activ=activ, dropout_p=dropout_p)
@@ -87,10 +87,10 @@ class CausualBlock(nn.Module):
         for block in self.blocks:
             res = x
             x = block(x)
-            x += res
+            x = x + res
         return x
 
-    def _get_conv(self, hidden_dim, dilation, activ='lrelu', dropout_p=0.2):
+    def _get_conv(self, hidden_dim, dilation, activ='lrelu', dropout_p=0.0):
         layers = [
             CausualConv(hidden_dim, hidden_dim, kernel_size=3, padding=dilation, dilation=dilation),
             _get_activation_fn(activ),
@@ -103,7 +103,7 @@ class CausualBlock(nn.Module):
         return nn.Sequential(*layers)
 
 class ConvBlock(nn.Module):
-    def __init__(self, hidden_dim, n_conv=3, dropout_p=0.2, activ='relu'):
+    def __init__(self, hidden_dim, n_conv=3, dropout_p=0.0, activ='relu'):
         super().__init__()
         self._n_groups = 8
         self.blocks = nn.ModuleList([
@@ -115,10 +115,10 @@ class ConvBlock(nn.Module):
         for block in self.blocks:
             res = x
             x = block(x)
-            x += res
+            x = x + res
         return x
 
-    def _get_conv(self, hidden_dim, dilation, activ='relu', dropout_p=0.2):
+    def _get_conv(self, hidden_dim, dilation, activ='relu', dropout_p=0.0):
         layers = [
             ConvNorm(hidden_dim, hidden_dim, kernel_size=3, padding=dilation, dilation=dilation),
             _get_activation_fn(activ),
